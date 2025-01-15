@@ -67,9 +67,11 @@ const App = () => {
             {menuItems.map((item, index) => (
               <View key={index} style={styles.recommendedItem}>
                 <Image source={NasiGoreng} style={styles.recommendedImage} />
-                <Text style={styles.recommendedItemTitle}>{item.title}</Text>
-                <Text style={styles.recommendedItemSubtitle}>{item.subtitle}</Text>
-                <Text style={styles.recommendedItemPrice}>{item.price}</Text>
+                <View style={styles.recommendedItemTextContainer}>
+                  <Text style={styles.recommendedItemTitle}>{item.title}</Text>
+                  <Text style={styles.recommendedItemSubtitle}>{item.subtitle}</Text>
+                  <Text style={styles.recommendedItemPrice}>{item.price}</Text>
+                </View>
                 {cart[item.title] ? (
                   <View style={styles.cartButtons}>
                     <TouchableOpacity onPress={() => removeFromCart(item)} style={styles.cartButton}>
@@ -117,13 +119,14 @@ const App = () => {
             </View>
           ))}
         </View>
+        <View style={styles.bottomSpace} />
       </ScrollView>
       {getTotalQuantity() > 0 && (
         <View style={styles.cartIconContainer}>
           <TouchableOpacity style={styles.cartIcon}>
             <Icon name="cart" size={24} color="#fff" />
-            <View style={styles.cartBadge}>
-              <Text style={styles.cartBadgeText}>{getTotalQuantity()}</Text>
+            <View style={styles.cartQuantityBadge}>
+              <Text style={styles.cartQuantityText}>{getTotalQuantity()}</Text>
             </View>
           </TouchableOpacity>
         </View>
@@ -215,16 +218,20 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+    justifyContent: 'space-between',
   },
   recommendedImage: {
     width: '100%',
     height: 100,
     borderRadius: 8,
   },
+  recommendedItemTextContainer: {
+    alignItems: 'center',
+    marginTop: 8,
+  },
   recommendedItemTitle: {
     fontSize: 14,
     fontWeight: '600',
-    marginTop: 8,
     textAlign: 'center',
   },
   recommendedItemSubtitle: {
@@ -236,6 +243,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginTop: 4,
+    textAlign: 'center',
   },
   addButton: {
     backgroundColor: '#10b981',
@@ -248,6 +256,7 @@ const styles = StyleSheet.create({
     color: '#fff',
     fontSize: 12,
     fontWeight: '600',
+    textAlign: 'center',
   },
   divider: {
     height: 1,
@@ -316,26 +325,35 @@ const styles = StyleSheet.create({
     position: 'absolute',
     bottom: 16,
     right: 16,
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   cartIcon: {
     backgroundColor: '#10b981',
-    borderRadius: 50,
+    borderRadius: 8,
     padding: 16,
     position: 'relative',
+    flexDirection: 'row',
+    alignItems: 'center',
   },
-  cartBadge: {
+  cartQuantityBadge: {
     position: 'absolute',
     top: -8,
     right: -8,
-    backgroundColor: '#fbbf24',
-    borderRadius: 8,
-    paddingHorizontal: 6,
-    paddingVertical: 2,
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 4,
+    minWidth: 24,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
-  cartBadgeText: {
-    color: '#fff',
+  cartQuantityText: {
+    color: '#10b981',
     fontSize: 12,
     fontWeight: '600',
+  },
+  bottomSpace: {
+    height: 80,
   },
 });
 

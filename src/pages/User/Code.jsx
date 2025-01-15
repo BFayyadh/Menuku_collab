@@ -1,12 +1,18 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons'; // Menggunakan Ionicons sebagai contoh
-import { useNavigation } from '@react-navigation/native';
+import React, {useState, useRef} from 'react';
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+} from 'react-native';
+import Icon from 'react-native-vector-icons/Ionicons'; // Using Ionicons as an example
+import {useNavigation} from '@react-navigation/native';
 
 const CodeInputScreen = () => {
   const [code, setCode] = useState(['', '', '', '']);
-
   const navigation = useNavigation();
+  const inputs = useRef([]);
 
   const handleInputChange = (text, index) => {
     const newCode = [...code];
@@ -14,33 +20,49 @@ const CodeInputScreen = () => {
     setCode(newCode);
 
     if (text && index < 3) {
-      // Pindah ke input berikutnya
-      inputs[index + 1].focus();
+      // Move to the next input
+      inputs.current[index + 1].focus();
+    } else if (!text && index > 0) {
+      // Move to the previous input if the current input is cleared
+      inputs.current[index - 1].focus();
     }
   };
 
-  const inputs = [];
+  const handleConfirm = () => {
+    if (code.every(digit => digit !== '')) {
+      // Only navigate if all inputs are filled
+      navigation.navigate('Menu');
+    } else {
+      // Optionally, you can show an alert or a message to inform the user
+      alert('Please enter all digits of the code.');
+    }
+  };
 
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.backButton}>
-        <Icon name="arrow-back" size={24} color="#fff" onPress={() => navigation.navigate('Choose')}/>
+        <Icon
+          name="arrow-back"
+          size={24}
+          color="#fff"
+          onPress={() => navigation.navigate('Choose')}
+        />
       </TouchableOpacity>
       <Text style={styles.title}>Enter the code</Text>
       <View style={styles.codeContainer}>
         {code.map((digit, index) => (
           <TextInput
             key={index}
-            ref={(input) => (inputs[index] = input)}
+            ref={input => (inputs.current[index] = input)}
             style={styles.input}
             value={digit}
-            onChangeText={(text) => handleInputChange(text, index)}
+            onChangeText={text => handleInputChange(text, index)}
             keyboardType="numeric"
             maxLength={1}
           />
         ))}
       </View>
-      <TouchableOpacity style={styles.confirmButton}>
+      <TouchableOpacity style={styles.confirmButton} onPress={handleConfirm}>
         <Text style={styles.confirmText}>Confirm</Text>
       </TouchableOpacity>
     </View>
@@ -64,7 +86,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     color: '#ffffff',
     marginBottom: 20,
-    fontWeight:'500'
+    fontWeight: '500',
   },
   codeContainer: {
     flexDirection: 'row',

@@ -10,6 +10,7 @@ import Login from '../pages/Login';
 import Choose from '../pages/Choose';
 import ScanOrEnter from '../pages/User/CodeorScan';
 import Code from '../pages/User/Code';
+import Menu from '../pages/User/Menu';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -69,6 +70,11 @@ const Router = () => {
       <Stack.Screen
         name="Code"
         component={Code}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Menu"
+        component={Menu}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

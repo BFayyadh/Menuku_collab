@@ -1,104 +1,134 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NasiGoreng from '../../assets/NasiGoreng.png';
 
 const App = () => {
+  const [cart, setCart] = useState({});
+
+  const addToCart = (item) => {
+    setCart((prevCart) => {
+      const newCart = { ...prevCart };
+      if (newCart[item.title]) {
+        newCart[item.title].quantity += 1;
+      } else {
+        newCart[item.title] = { ...item, quantity: 1 };
+      }
+      return newCart;
+    });
+  };
+
+  const removeFromCart = (item) => {
+    setCart((prevCart) => {
+      const newCart = { ...prevCart };
+      if (newCart[item.title]) {
+        newCart[item.title].quantity -= 1;
+        if (newCart[item.title].quantity === 0) {
+          delete newCart[item.title];
+        }
+      }
+      return newCart;
+    });
+  };
+
+  const getTotalQuantity = () => {
+    return Object.values(cart).reduce((total, item) => total + item.quantity, 0);
+  };
+
+  const menuItems = [
+    { title: 'Nasi Goreng Seafood', subtitle: 'Udang, Cumi, Bakso Ikan & Telur', price: 'Rp 30.000' },
+    { title: 'Nasi Goreng Spesial', subtitle: 'Nasi + Telur + Ayam', price: 'Rp 30.000' },
+    { title: 'Nasi Goreng Kampung', subtitle: 'Nasi + Telur + Sayur', price: 'Rp 28.000' },
+  ];
+
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.header}>
-        <TouchableOpacity style={styles.backButton}>
-          <Icon name="arrow-back" size={24} color="#10b981" />
-          <Text style={styles.backButtonText}>Back</Text>
-        </TouchableOpacity>
-        <View style={styles.rating}>
-          <Icon name="star" size={24} color="#fbbf24" />
-          <Text style={styles.ratingValue}>4/5</Text>
+    <View style={styles.container}>
+      <ScrollView>
+        <View style={styles.header}>
+          <TouchableOpacity style={styles.backButton}>
+            <Icon name="arrow-back" size={24} color="#10b981" />
+            <Text style={styles.backButtonText}>Back</Text>
+          </TouchableOpacity>
+          <View style={styles.rating}>
+            <Icon name="star" size={24} color="#fbbf24" />
+            <Text style={styles.ratingValue}>4/5</Text>
+          </View>
         </View>
-      </View>
-      <View style={styles.titleContainer}>
-        <Text style={styles.title}>Warung Pak Agus</Text>
-        <Text style={styles.subtitle}>Jl Sayan No 10</Text>
-      </View>
-      <View style={styles.mainImageContainer}>
-        <Image
-          source={NasiGoreng}
-          style={styles.mainImage}
-        />
-      </View>
-      <View style={styles.recommendedContainer}>
-        <Text style={styles.recommendedTitle}>Recommended</Text>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.recommendedItems}>
-          <View style={styles.recommendedItem}>
-            <Image
-              source={NasiGoreng}
-              style={styles.recommendedImage}
-            />
-            <Text style={styles.recommendedItemTitle}>Ayam Lalapan</Text>
-            <Text style={styles.recommendedItemSubtitle}>Ayam + sambal + timun</Text>
-            <Text style={styles.recommendedItemPrice}>Rp. 20.000</Text>
-            <TouchableOpacity style={styles.addButton}>
-              <Text style={styles.addButtonText}>Add</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.recommendedItem}>
-            <Image
-              source={NasiGoreng}
-              style={styles.recommendedImage}
-            />
-            <Text style={styles.recommendedItemTitle}>Ayam saos telur asin</Text>
-            <Text style={styles.recommendedItemSubtitle}>Ayam + saos telur asin</Text>
-            <Text style={styles.recommendedItemPrice}>Rp. 25.000</Text>
-            <TouchableOpacity style={styles.addButton}>
-              <Text style={styles.addButtonText}>Add</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.recommendedItem}>
-            <Image
-              source={NasiGoreng}
-              style={styles.recommendedImage}
-            />
-            <Text style={styles.recommendedItemTitle}>Nasi Goreng Spesial</Text>
-            <Text style={styles.recommendedItemSubtitle}>Nasi + Telur + Ayam</Text>
-            <Text style={styles.recommendedItemPrice}>Rp. 30.000</Text>
-            <TouchableOpacity style={styles.addButton}>
-              <Text style={styles.addButtonText}>Add</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.recommendedItem}>
-            <Image
-              source={NasiGoreng}
-              style={styles.recommendedImage}
-            />
-            <Text style={styles.recommendedItemTitle}>Nasi Goreng Kampung</Text>
-            <Text style={styles.recommendedItemSubtitle}>Nasi + Telur + Sayur</Text>
-            <Text style={styles.recommendedItemPrice}>Rp. 28.000</Text>
-            <TouchableOpacity style={styles.addButton}>
-              <Text style={styles.addButtonText}>Add</Text>
-            </TouchableOpacity>
-          </View>
-        </ScrollView>
-      </View>
-      <View style={styles.divider} />
-      <ScrollView style={styles.menuScroll}>
-        {Array.from({ length: 10 }).map((_, index) => (
-          <View key={index} style={styles.menuItem}>
-            <Image
-              source={NasiGoreng}
-              style={styles.menuItemImage}
-            />
-            <View style={styles.menuItemDetails}>
-              <Text style={styles.menuItemTitle}>Nasi Goreng Seafood</Text>
-              <Text style={styles.menuItemSubtitle}>Udang, Cumi, Bakso Ikan & Telur</Text>
-              <Text style={styles.menuItemPrice}>Rp 30.000</Text>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>Warung Pak Agus</Text>
+          <Text style={styles.subtitle}>Jl Sayan No 10</Text>
+        </View>
+        <View style={styles.mainImageContainer}>
+          <Image source={NasiGoreng} style={styles.mainImage} />
+        </View>
+        <View style={styles.recommendedContainer}>
+          <Text style={styles.recommendedTitle}>Recommended</Text>
+          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.recommendedItems}>
+            {menuItems.map((item, index) => (
+              <View key={index} style={styles.recommendedItem}>
+                <Image source={NasiGoreng} style={styles.recommendedImage} />
+                <Text style={styles.recommendedItemTitle}>{item.title}</Text>
+                <Text style={styles.recommendedItemSubtitle}>{item.subtitle}</Text>
+                <Text style={styles.recommendedItemPrice}>{item.price}</Text>
+                {cart[item.title] ? (
+                  <View style={styles.cartButtons}>
+                    <TouchableOpacity onPress={() => removeFromCart(item)} style={styles.cartButton}>
+                      <Text style={styles.cartButtonText}>-</Text>
+                    </TouchableOpacity>
+                    <Text style={styles.cartQuantity}>{cart[item.title].quantity}</Text>
+                    <TouchableOpacity onPress={() => addToCart(item)} style={styles.cartButton}>
+                      <Text style={styles.cartButtonText}>+</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  <TouchableOpacity onPress={() => addToCart(item)} style={styles.addButton}>
+                    <Text style={styles.addButtonText}>Add</Text>
+                  </TouchableOpacity>
+                )}
+              </View>
+            ))}
+          </ScrollView>
+        </View>
+        <View style={styles.divider} />
+        <View style={styles.menuScroll}>
+          {menuItems.map((item, index) => (
+            <View key={index} style={styles.menuItem}>
+              <Image source={NasiGoreng} style={styles.menuItemImage} />
+              <View style={styles.menuItemDetails}>
+                <Text style={styles.menuItemTitle}>{item.title}</Text>
+                <Text style={styles.menuItemSubtitle}>{item.subtitle}</Text>
+                <Text style={styles.menuItemPrice}>{item.price}</Text>
+              </View>
+              {cart[item.title] ? (
+                <View style={styles.cartButtons}>
+                  <TouchableOpacity onPress={() => removeFromCart(item)} style={styles.cartButton}>
+                    <Text style={styles.cartButtonText}>-</Text>
+                  </TouchableOpacity>
+                  <Text style={styles.cartQuantity}>{cart[item.title].quantity}</Text>
+                  <TouchableOpacity onPress={() => addToCart(item)} style={styles.cartButton}>
+                    <Text style={styles.cartButtonText}>+</Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <TouchableOpacity onPress={() => addToCart(item)} style={styles.addButton}>
+                  <Text style={styles.addButtonText}>Add</Text>
+                </TouchableOpacity>
+              )}
             </View>
-            <TouchableOpacity style={styles.addButton}>
-              <Text style={styles.addButtonText}>Add</Text>
-            </TouchableOpacity>
-          </View>
-        ))}
+          ))}
+        </View>
       </ScrollView>
-    </ScrollView>
+      {getTotalQuantity() > 0 && (
+        <View style={styles.cartIconContainer}>
+          <TouchableOpacity style={styles.cartIcon}>
+            <Icon name="cart" size={24} color="#fff" />
+            <View style={styles.cartBadge}>
+              <Text style={styles.cartBadgeText}>{getTotalQuantity()}</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+      )}
+    </View>
   );
 };
 
@@ -195,6 +225,7 @@ const styles = StyleSheet.create({
     fontSize: 14,
     fontWeight: '600',
     marginTop: 8,
+    textAlign: 'center',
   },
   recommendedItemSubtitle: {
     fontSize: 12,
@@ -259,6 +290,51 @@ const styles = StyleSheet.create({
   },
   menuItemPrice: {
     fontSize: 14,
+    fontWeight: '600',
+  },
+  cartButtons: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  cartButton: {
+    backgroundColor: '#10b981',
+    borderRadius: 4,
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+  },
+  cartButtonText: {
+    color: '#fff',
+    fontSize: 12,
+    fontWeight: '600',
+  },
+  cartQuantity: {
+    marginHorizontal: 8,
+    fontSize: 14,
+    fontWeight: '600',
+  },
+  cartIconContainer: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+  },
+  cartIcon: {
+    backgroundColor: '#10b981',
+    borderRadius: 50,
+    padding: 16,
+    position: 'relative',
+  },
+  cartBadge: {
+    position: 'absolute',
+    top: -8,
+    right: -8,
+    backgroundColor: '#fbbf24',
+    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+  },
+  cartBadgeText: {
+    color: '#fff',
+    fontSize: 12,
     fontWeight: '600',
   },
 });

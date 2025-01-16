@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NasiGoreng from '../../assets/NasiGoreng.png';
 
 const App = () => {
   const [cart, setCart] = useState({});
-    const navigation = useNavigation();
+  const navigation = useNavigation();
 
   const addToCart = (item) => {
     setCart((prevCart) => {
@@ -50,9 +50,9 @@ const App = () => {
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton}  onPress={() => navigation.navigate('Scan')}>
-            <Icon name="arrow-back" size={24} color="#10b981" />
-            <Text style={styles.backButtonText} >Back</Text>
+          <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Scan')}>
+            <Icon name="arrow-back" size={24} color="#008C54" />
+            <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
           <View style={styles.rating}>
             <Icon name="star" size={24} color="#fbbf24" />
@@ -159,7 +159,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backButtonText: {
-    color: '#10b981',
+    color: '#008C54',
     fontWeight: '600',
     fontSize: 16,
     marginLeft: 4,
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   addButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#008C54',
     borderRadius: 4,
     paddingVertical: 4,
     paddingHorizontal: 8,
@@ -311,7 +311,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cartButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#008C54',
     borderRadius: 4,
     paddingVertical: 4,
     paddingHorizontal: 8,
@@ -334,7 +334,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cartIcon: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#008C54',
     borderRadius: 8,
     padding: 16,
     position: 'relative',
@@ -353,7 +353,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cartQuantityText: {
-    color: '#10b981',
+    color: '#008C54',
     fontSize: 12,
     fontWeight: '600',
   },

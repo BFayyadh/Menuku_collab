@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, } from 'react-native';
+import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NasiGoreng from '../../assets/NasiGoreng.png';
 
 const App = () => {
   const [cart, setCart] = useState({});
+    const navigation = useNavigation();
 
   const addToCart = (item) => {
     setCart((prevCart) => {
@@ -39,15 +41,18 @@ const App = () => {
     { title: 'Nasi Goreng Seafood', subtitle: 'Udang, Cumi, Bakso Ikan & Telur', price: 'Rp 30.000' },
     { title: 'Nasi Goreng Spesial', subtitle: 'Nasi + Telur + Ayam', price: 'Rp 30.000' },
     { title: 'Nasi Goreng Kampung', subtitle: 'Nasi + Telur + Sayur', price: 'Rp 28.000' },
+    { title: 'Nasi Goreng Seafood', subtitle: 'Udang, Cumi, Bakso Ikan & Telur', price: 'Rp 30.000' },
+    { title: 'Nasi Goreng Spesial', subtitle: 'Nasi + Telur + Ayam', price: 'Rp 30.000' },
+    { title: 'Nasi Goreng Kampung', subtitle: 'Nasi + Telur + Sayur', price: 'Rp 28.000' },
   ];
 
   return (
     <View style={styles.container}>
       <ScrollView>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton}>
+          <TouchableOpacity style={styles.backButton}  onPress={() => navigation.navigate('Scan')}>
             <Icon name="arrow-back" size={24} color="#10b981" />
-            <Text style={styles.backButtonText}>Back</Text>
+            <Text style={styles.backButtonText} >Back</Text>
           </TouchableOpacity>
           <View style={styles.rating}>
             <Icon name="star" size={24} color="#fbbf24" />

@@ -8,9 +8,9 @@ import Onboarding from '../components/OnBoard/Onboarding';
 import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import Choose from '../pages/Choose';
-import ScanOrEnter from '../pages/User/CodeorScan';
-import Code from '../pages/User/Code';
-import Menu from '../pages/User/Menu';
+import ScanOrEnter from '../pages/client/CodeorScan';
+import Code from '../pages/client/Code';
+import Menu from '../pages/client/Menu';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();

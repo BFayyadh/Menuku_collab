@@ -60,7 +60,7 @@ const App = () => {
           </View>
         </View>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Warung Pak Agus</Text>
+          <Text style={styles.title}>DAPUR MALLIOBORO</Text>
           <Text style={styles.subtitle}>Jl Sayan No 10</Text>
         </View>
         <View style={styles.mainImageContainer}>

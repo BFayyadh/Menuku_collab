@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert } from 'react-native';
+import { View, Text, Image, TouchableOpacity, StyleSheet, ScrollView, Alert, TextInput } from 'react-native';
 import NasiGoreng from '../../assets/NasiGoreng.png';
 
 const Pay = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
+  const [note, setNote] = useState('');
 
   useEffect(() => {
     const cartItems = [
@@ -85,13 +86,22 @@ const Pay = ({ navigation }) => {
             </View>
           </View>
         ))}
+        <View style={styles.noteContainer}>
+          <Text style={styles.noteTitle}>Add a note:</Text>
+          <TextInput
+            style={styles.noteInput}
+            placeholder="Enter your note here"
+            value={note}
+            onChangeText={setNote}
+          />
+        </View>
       </ScrollView>
       <View style={styles.footer}>
         <View>
           <Text style={styles.totalText}>Total</Text>
           <Text style={styles.totalAmount}>Rp {totalAmount.toLocaleString('id-ID')}</Text>
         </View>
-        <TouchableOpacity style={styles.payButton}>
+        <TouchableOpacity style={styles.payButton} onPress={() => navigation.navigate('Wait')}>
           <Text style={styles.payButtonText}>Pay</Text>
         </TouchableOpacity>
       </View>
@@ -176,6 +186,29 @@ const styles = StyleSheet.create({
   },
   quantityText: {
     marginHorizontal: 8,
+  },
+  noteContainer: {
+    marginTop: 16,
+    padding: 16,
+    backgroundColor: 'white',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+    borderRadius: 8,
+  },
+  noteTitle: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    marginBottom: 8,
+  },
+  noteInput: {
+    borderColor: '#d1d5db',
+    borderWidth: 1,
+    borderRadius: 8,
+    padding: 8,
+    fontSize: 16,
   },
   footer: {
     flexDirection: 'row',

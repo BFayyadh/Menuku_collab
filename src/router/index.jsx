@@ -8,9 +8,12 @@ import Onboarding from '../components/OnBoard/Onboarding';
 import Signup from '../pages/Signup';
 import Login from '../pages/Login';
 import Choose from '../pages/Choose';
-import ScanOrEnter from '../pages/User/CodeorScan';
-import Code from '../pages/User/Code';
-import Menu from '../pages/User/Menu';
+import ScanOrEnter from '../pages/client/CodeorScan';
+import Code from '../pages/client/Code';
+import Menu from '../pages/client/Menu';
+import Pay from '../pages/client/Pay';
+import Wait from '../pages/client/Wait';
+import Done from '../pages/client/Dones';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -75,6 +78,20 @@ const Router = () => {
       <Stack.Screen
         name="Menu"
         component={Menu}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen 
+      name="Pay" 
+      component={Pay} 
+      options={{headerShown: false}} />
+      <Stack.Screen
+        name="Wait"
+        component={Wait}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Done"
+        component={Done}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

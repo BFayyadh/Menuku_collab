@@ -128,7 +128,7 @@ const App = () => {
       </ScrollView>
       {getTotalQuantity() > 0 && (
         <View style={styles.cartIconContainer}>
-          <TouchableOpacity style={styles.cartIcon}>
+          <TouchableOpacity style={styles.cartIcon} onPress={() => navigation.navigate('Pay')}>
             <Icon name="cart" size={24} color="#fff" />
             <View style={styles.cartQuantityBadge}>
               <Text style={styles.cartQuantityText}>{getTotalQuantity()}</Text>

@@ -60,7 +60,7 @@ const App = () => {
           </View>
         </View>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Warung Pak Agus</Text>
+          <Text style={styles.title}>DAPUR MALLIOBORO</Text>
           <Text style={styles.subtitle}>Jl Sayan No 10</Text>
         </View>
         <View style={styles.mainImageContainer}>
@@ -128,7 +128,7 @@ const App = () => {
       </ScrollView>
       {getTotalQuantity() > 0 && (
         <View style={styles.cartIconContainer}>
-          <TouchableOpacity style={styles.cartIcon}>
+          <TouchableOpacity style={styles.cartIcon} onPress={() => navigation.navigate('Pay')}>
             <Icon name="cart" size={24} color="#fff" />
             <View style={styles.cartQuantityBadge}>
               <Text style={styles.cartQuantityText}>{getTotalQuantity()}</Text>

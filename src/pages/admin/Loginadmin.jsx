@@ -87,11 +87,11 @@ const styles = StyleSheet.create({
   },
   backButton: {
     alignSelf: 'flex-start',
-    backgroundColor: '#008f4c',
+    backgroundColor: '#008C54',
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 5,
-    marginBottom: 10,
+    marginBottom: 50,
   },
   backButtonText: {
     color: '#fff',
@@ -104,12 +104,13 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: '800',
-    color: '#008f4c',
+    color: '#008C54',
     marginBottom: 10,
   },
   subtitle: {
     fontSize: 18,
     color: '#666',
+    fontWeight: '700',
   },
   inputContainer: {
     width: '100%',
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   loginButton: {
-    backgroundColor: '#008f4c',
+    backgroundColor: '#008C54',
     paddingVertical: 15,
     borderRadius: 50,
     width: '100%',

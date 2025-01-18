@@ -8,7 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 const Choose = () => {
   const navigation = useNavigation();
   const handleCreateMenu = () => {
-    Alert.alert('Create Menu', 'Navigating to Create Digital Menu');
+    navigation.navigate('Loginadmin');
   };
 
   const handleViewMenu = () => {

@@ -14,6 +14,7 @@ import Menu from '../pages/client/Menu';
 import Pay from '../pages/client/Pay';
 import Wait from '../pages/client/Wait';
 import Done from '../pages/client/Dones';
+import Loginadmin from '../pages/admin/Loginadmin';
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -80,10 +81,7 @@ const Router = () => {
         component={Menu}
         options={{headerShown: false}}
       />
-      <Stack.Screen 
-      name="Pay" 
-      component={Pay} 
-      options={{headerShown: false}} />
+      <Stack.Screen name="Pay" component={Pay} options={{headerShown: false}} />
       <Stack.Screen
         name="Wait"
         component={Wait}
@@ -92,6 +90,11 @@ const Router = () => {
       <Stack.Screen
         name="Done"
         component={Done}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Loginadmin"
+        component={Loginadmin}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

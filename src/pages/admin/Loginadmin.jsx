@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import {
   StyleSheet,
   Text,
@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const LoginAdmin = ({ navigation }) => {
+const LoginAdmin = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -18,12 +18,14 @@ const LoginAdmin = ({ navigation }) => {
       Alert.alert('Error', 'Harap Isi Email dan Password');
       return;
     }
-    navigation.navigate('Choose');
+    navigation.navigate('Signupadmin');
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.navigate('Choose')}>
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.navigate('Choose')}>
         <Text style={styles.backButtonText}>BACK</Text>
       </TouchableOpacity>
       <View style={styles.header}>
@@ -32,7 +34,12 @@ const LoginAdmin = ({ navigation }) => {
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
-          <Icon name="mail-outline" size={25} color="#000" style={styles.icon} />
+          <Icon
+            name="mail-outline"
+            size={25}
+            color="#000"
+            style={styles.icon}
+          />
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -62,13 +69,10 @@ const LoginAdmin = ({ navigation }) => {
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
-      <Text style={styles.footerText}>
-        Dont have an account?
-      </Text>
+      <Text style={styles.footerText}>Dont have an account?</Text>
       <Text
         style={styles.signUpText}
-        onPress={() => navigation.navigate('Signup')}
-      >
+        onPress={() => navigation.navigate('Signupadmin')}>
         Make your own digital menu
       </Text>
     </View>

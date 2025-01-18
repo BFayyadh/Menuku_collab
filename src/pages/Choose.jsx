@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   leftSection: {
     backgroundColor: '#ffffff',
-  },
+  },  
   rightSection: {
     backgroundColor: '#008C54',
   },

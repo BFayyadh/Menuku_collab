@@ -16,6 +16,7 @@ import Wait from '../pages/client/Wait';
 import Done from '../pages/client/Dones';
 import Loginadmin from '../pages/admin/Loginadmin';
 import Signupadmin from '../pages/admin/Signupadmin';
+import Addmenu from '../pages/admin/Addmenu'
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -101,6 +102,11 @@ const Router = () => {
       <Stack.Screen
         name="Signupadmin"
         component={Signupadmin}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Addmenu"
+        component={Addmenu}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

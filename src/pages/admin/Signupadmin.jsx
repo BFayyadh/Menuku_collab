@@ -1,45 +1,33 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import React, { useState } from 'react';
+import { StyleSheet, Text, View, TextInput, TouchableOpacity, Alert, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const LoginAdmin = ({navigation}) => {
+const SignupAdmin = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [restoName, setRestoName] = useState('');
+  const [address, setAddress] = useState('');
 
-  const handleLogin = () => {
-    if (!email || !password) {
-      Alert.alert('Error', 'Harap Isi Email dan Password');
+  const handleNext = () => {
+    if (!email || !password || !restoName || !address) {
+      Alert.alert('Error', 'Harap isi semua kolom');
       return;
     }
-    navigation.navigate('Signupadmin');
+    navigation.navigate('Addmenu');
   };
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.navigate('Choose')}>
+      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
         <Text style={styles.backButtonText}>BACK</Text>
       </TouchableOpacity>
       <View style={styles.header}>
         <Text style={styles.title}>MenuKU</Text>
-        <Text style={styles.subtitle}>Make your digital menu menu</Text>
+        <Text style={styles.subtitle}>Make your own digital menu in here</Text>
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
-          <Icon
-            name="mail-outline"
-            size={25}
-            color="#000"
-            style={styles.icon}
-          />
+          <Icon name="mail-outline" size={25} color="#000" style={styles.icon} />
           <TextInput
             style={styles.input}
             placeholder="Email"
@@ -50,12 +38,7 @@ const LoginAdmin = ({navigation}) => {
           />
         </View>
         <View style={styles.inputWrapper}>
-          <Icon
-            name="lock-closed-outline"
-            size={25}
-            color="#000"
-            style={styles.icon}
-          />
+          <Icon name="lock-closed-outline" size={25} color="#000" style={styles.icon} />
           <TextInput
             style={styles.input}
             placeholder="Password"
@@ -65,16 +48,34 @@ const LoginAdmin = ({navigation}) => {
             onChangeText={setPassword}
           />
         </View>
+        <View style={styles.inputWrapper}>
+          <Icon name="home-outline" size={25} color="#000" style={styles.icon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Name of your Resto"
+            placeholderTextColor="#aaa"
+            value={restoName}
+            onChangeText={setRestoName}
+          />
+        </View>
+        <View style={styles.inputWrapper}>
+          <Icon name="location-outline" size={25} color="#000" style={styles.icon} />
+          <TextInput
+            style={styles.input}
+            placeholder="Address"
+            placeholderTextColor="#aaa"
+            value={address}
+            onChangeText={setAddress}
+          />
+        </View>
       </View>
-      <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
-        <Text style={styles.loginButtonText}>Login</Text>
+      <Image
+        source={{ uri: 'https://placehold.co/300x200' }}
+        style={styles.image}
+      />
+      <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
+        <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
-      <Text style={styles.footerText}>Dont have an account?</Text>
-      <Text
-        style={styles.signUpText}
-        onPress={() => navigation.navigate('Signupadmin')}>
-        Make your own digital menu
-      </Text>
     </View>
   );
 };
@@ -87,7 +88,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     padding: 20,
     paddingTop: 40,
-    paddingHorizontal: 20,
   },
   backButton: {
     alignSelf: 'flex-start',
@@ -95,7 +95,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
     paddingHorizontal: 15,
     borderRadius: 5,
-    marginBottom: 50,
+    marginBottom: 30,
   },
   backButtonText: {
     color: '#fff',
@@ -138,7 +138,13 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: '#000',
   },
-  loginButton: {
+  image: {
+    width: 300,
+    height: 200,
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+  nextButton: {
     backgroundColor: '#008C54',
     paddingVertical: 15,
     borderRadius: 50,
@@ -146,23 +152,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  loginButtonText: {
+  nextButtonText: {
     color: '#fff',
     fontWeight: 'bold',
     fontSize: 20,
   },
-  footerText: {
-    marginTop: 20,
-    fontSize: 16,
-    color: '#000',
-    textAlign: 'center',
-  },
-  signUpText: {
-    color: '#008f4c',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    fontSize: 16,
-  },
 });
 
-export default LoginAdmin;
+export default SignupAdmin;

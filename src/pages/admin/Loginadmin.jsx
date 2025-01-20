@@ -1,21 +1,14 @@
-import React, {useState} from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Alert,
-} from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const LoginAdmin = ({navigation}) => {
+const LoginAdmin = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleLogin = () => {
     if (!email || !password) {
-      Alert.alert('Error', 'Harap Isi Email dan Password');
+      Alert.alert('Error', 'Please enter your email and password');
       return;
     }
     navigation.navigate('Signupadmin');
@@ -30,7 +23,7 @@ const LoginAdmin = ({navigation}) => {
       </TouchableOpacity>
       <View style={styles.header}>
         <Text style={styles.title}>MenuKU</Text>
-        <Text style={styles.subtitle}>Make your digital menu menu</Text>
+        <Text style={styles.subtitle}>Make your digital menu</Text>
       </View>
       <View style={styles.inputContainer}>
         <View style={styles.inputWrapper}>
@@ -69,7 +62,7 @@ const LoginAdmin = ({navigation}) => {
       <TouchableOpacity style={styles.loginButton} onPress={handleLogin}>
         <Text style={styles.loginButtonText}>Login</Text>
       </TouchableOpacity>
-      <Text style={styles.footerText}>Dont have an account?</Text>
+      <Text style={styles.footerText}>Don't have an account?</Text>
       <Text
         style={styles.signUpText}
         onPress={() => navigation.navigate('Signupadmin')}>
@@ -82,24 +75,29 @@ const LoginAdmin = ({navigation}) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 20,
     paddingTop: 40,
-    paddingHorizontal: 20,
   },
   backButton: {
     alignSelf: 'flex-start',
     backgroundColor: '#008C54',
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 5,
-    marginBottom: 50,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
+    marginBottom: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
   },
   backButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: 'bold',
   },
   header: {
     alignItems: 'center',
@@ -118,17 +116,23 @@ const styles = StyleSheet.create({
   },
   inputContainer: {
     width: '100%',
-    marginBottom: 10,
+    marginBottom: 20,
   },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#000',
+    borderWidth: 1,
+    borderColor: '#ddd',
     borderRadius: 10,
     marginBottom: 15,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   icon: {
     marginRight: 10,
@@ -145,6 +149,11 @@ const styles = StyleSheet.create({
     width: '100%',
     alignItems: 'center',
     marginTop: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
   },
   loginButtonText: {
     color: '#fff',
@@ -158,10 +167,11 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   signUpText: {
-    color: '#008f4c',
+    color: '#008C54',
     fontWeight: 'bold',
     textAlign: 'center',
     fontSize: 16,
+    marginTop: 5,
   },
 });
 

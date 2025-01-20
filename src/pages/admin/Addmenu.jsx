@@ -1,96 +1,124 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView, KeyboardAvoidingView, Platform, Image, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Picker } from '@react-native-picker/picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 
 const AddMenu = ({ navigation }) => {
   const [menuType, setMenuType] = useState('');
   const [menuName, setMenuName] = useState('');
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
+  const [imageUri, setImageUri] = useState(null);
 
   const handleFinish = () => {
     if (!menuType || !menuName || !price || !description) {
-      Alert.alert('Error', 'Harap isi semua kolom');
+      Alert.alert('Error', 'Please fill in all fields');
       return;
     }
-    Alert.alert('Success', 'Menu added successfully');
+    navigation.navigate('Loginadmin');
+  };
+
+  const chooseImage = () => {
+    launchImageLibrary({ mediaType: 'photo' }, (response) => {
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else {
+        const uri = response.assets[0].uri;
+        setImageUri(uri);
+      }
+    });
   };
 
   return (
-    <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
-        <Text style={styles.backButtonText}>BACK</Text>
-      </TouchableOpacity>
-      <View style={styles.header}>
-        <Text style={styles.title}>Menu KU</Text>
-        <Text style={styles.subtitle}>Make your own digital menu in here</Text>
-      </View>
-      <View style={styles.inputContainer}>
-        <Text style={styles.label}>Jenis Menu</Text>
-        <View style={styles.inputWrapper}>
-          <Icon name="fast-food-outline" size={25} color="#000" style={styles.icon} />
-          <Picker
-            selectedValue={menuType}
-            style={styles.picker}
-            onValueChange={(itemValue) => setMenuType(itemValue)}
-          >
-            <Picker.Item label="Select" value="" />
-            <Picker.Item label="Food" value="food" />
-            <Picker.Item label="Drink" value="drink" />
-          </Picker>
-        </View>
-        <Text style={styles.label}>Nama Menu</Text>
-        <View style={styles.inputWrapper}>
-          <Icon name="pencil-outline" size={25} color="#000" style={styles.icon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Nama Menu"
-            placeholderTextColor="#aaa"
-            value={menuName}
-            onChangeText={setMenuName}
-          />
-        </View>
-        <Text style={styles.label}>Harga</Text>
-        <View style={styles.inputWrapper}>
-          <Icon name="cash-outline" size={25} color="#000" style={styles.icon} />
-          <TextInput
-            style={styles.input}
-            placeholder="Harga"
-            placeholderTextColor="#aaa"
-            value={price}
-            onChangeText={setPrice}
-          />
-        </View>
-        <Text style={styles.label}>Deskripsi Menu</Text>
-        <View style={styles.inputWrapper}>
-          <Icon name="document-text-outline" size={25} color="#000" style={styles.icon} />
-          <TextInput
-            style={styles.textArea}
-            placeholder="Deskripsi Menu"
-            placeholderTextColor="#aaa"
-            value={description}
-            onChangeText={setDescription}
-            multiline={true}
-            numberOfLines={3}
-          />
-        </View>
-        <Text style={styles.label}>Foto Menu</Text>
-        <TouchableOpacity style={styles.imageUpload}>
-          <Text style={styles.imageUploadText}>Choose Image</Text>
+    <KeyboardAvoidingView
+      style={styles.container}
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+    >
+      <ScrollView contentContainerStyle={styles.scrollContainer}>
+        <TouchableOpacity style={styles.backButton} onPress={() => navigation.goBack()}>
+          <Text style={styles.backButtonText}>BACK</Text>
         </TouchableOpacity>
-      </View>
-      <TouchableOpacity style={styles.finishButton} onPress={handleFinish}>
-        <Text style={styles.finishButtonText}>Finish</Text>
-      </TouchableOpacity>
-    </View>
+        <View style={styles.header}>
+          <Text style={styles.title}>Menu KU</Text>
+          <Text style={styles.subtitle}>Make your own digital menu in here</Text>
+        </View>
+        <View style={styles.inputContainer}>
+          <View style={styles.inputWrapper}>
+            <Icon name="fast-food-outline" size={25} color="#000" style={styles.icon} />
+            <Picker
+              selectedValue={menuType}
+              style={styles.picker}
+              onValueChange={(itemValue) => setMenuType(itemValue)}
+            >
+              <Picker.Item label="Select Menu Type" value="" />
+              <Picker.Item label="Food" value="food" />
+              <Picker.Item label="Drink" value="drink" />
+            </Picker>
+          </View>
+          <View style={styles.inputWrapper}>
+            <Icon name="pencil-outline" size={25} color="#000" style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Menu Name"
+              placeholderTextColor="#aaa"
+              value={menuName}
+              onChangeText={setMenuName}
+            />
+          </View>
+          <View style={styles.inputWrapper}>
+            <Icon name="cash-outline" size={25} color="#000" style={styles.icon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Price"
+              placeholderTextColor="#aaa"
+              value={price}
+              onChangeText={setPrice}
+              keyboardType="numeric"
+            />
+          </View>
+          <View style={styles.inputWrapper}>
+            <Icon name="document-text-outline" size={25} color="#000" style={styles.icon} />
+            <TextInput
+              style={styles.textArea}
+              placeholder="Menu Description"
+              placeholderTextColor="#aaa"
+              value={description}
+              onChangeText={setDescription}
+              multiline={true}
+              numberOfLines={3}
+            />
+          </View>
+          <View style={styles.imageContainer}>
+            {imageUri && (
+              <Image
+                source={{ uri: imageUri }}
+                style={styles.imagePreview}
+                alt="Preview of the selected menu image"
+              />
+            )}
+            <TouchableOpacity style={styles.imageUpload} onPress={chooseImage}>
+              <Icon name="add-outline" size={30} color="#fff" />
+              <Text style={styles.imageUploadText}>Add Image</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        <TouchableOpacity style={styles.finishButton} onPress={handleFinish}>
+          <Text style={styles.finishButtonText}>Finish</Text>
+        </TouchableOpacity>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
+  },
+  scrollContainer: {
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 20,
@@ -99,14 +127,20 @@ const styles = StyleSheet.create({
   backButton: {
     alignSelf: 'flex-start',
     backgroundColor: '#008C54',
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
     marginBottom: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
   },
   backButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: 'bold',
   },
   header: {
     alignItems: 'center',
@@ -127,20 +161,21 @@ const styles = StyleSheet.create({
     width: '100%',
     marginBottom: 10,
   },
-  label: {
-    fontSize: 16,
-    color: '#000',
-    marginBottom: 5,
-  },
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#000',
+    borderWidth: 1,
+    borderColor: '#ddd',
     borderRadius: 10,
     marginBottom: 15,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   icon: {
     marginRight: 10,
@@ -161,18 +196,46 @@ const styles = StyleSheet.create({
     flex: 1,
     height: 50,
   },
-  imageUpload: {
-    borderWidth: 2,
-    borderColor: '#000',
-    borderRadius: 10,
-    padding: 10,
+  addImageLabel: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#666',
+    marginBottom: 10,
+    alignSelf: 'flex-start',
+  },
+  imageContainer: {
+    flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'center',
     marginBottom: 20,
   },
+  imageUpload: {
+    borderWidth: 1,
+    borderColor: '#ddd',
+    borderRadius: 10,
+    padding: 15,
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: '#008C54',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    marginLeft: 10,
+    flexDirection: 'row',
+  },
   imageUploadText: {
-    color: '#aaa',
+    color: '#fff',
     fontSize: 16,
+    marginLeft: 5,
+    fontWeight: 'bold',
+  },
+  imagePreview: {
+    width: 100,
+    height: 100,
+    borderRadius: 10,
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
   finishButton: {
     backgroundColor: '#008C54',
@@ -180,7 +243,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: '100%',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 130,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
   },
   finishButtonText: {
     color: '#fff',

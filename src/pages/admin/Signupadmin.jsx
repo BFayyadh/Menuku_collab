@@ -10,7 +10,7 @@ const SignupAdmin = ({ navigation }) => {
 
   const handleNext = () => {
     if (!email || !password || !restoName || !address) {
-      Alert.alert('Error', 'Harap isi semua kolom');
+      Alert.alert('Error', 'Please fill in all fields');
       return;
     }
     navigation.navigate('Addmenu');
@@ -69,10 +69,6 @@ const SignupAdmin = ({ navigation }) => {
           />
         </View>
       </View>
-      <Image
-        source={{ uri: 'https://placehold.co/300x200' }}
-        style={styles.image}
-      />
       <TouchableOpacity style={styles.nextButton} onPress={handleNext}>
         <Text style={styles.nextButtonText}>Next</Text>
       </TouchableOpacity>
@@ -83,7 +79,7 @@ const SignupAdmin = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#f5f5f5',
     justifyContent: 'flex-start',
     alignItems: 'center',
     padding: 20,
@@ -92,14 +88,20 @@ const styles = StyleSheet.create({
   backButton: {
     alignSelf: 'flex-start',
     backgroundColor: '#008C54',
-    paddingVertical: 5,
-    paddingHorizontal: 15,
-    borderRadius: 5,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 10,
     marginBottom: 30,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
   },
   backButtonText: {
     color: '#fff',
     fontSize: 16,
+    fontWeight: 'bold',
   },
   header: {
     alignItems: 'center',
@@ -123,12 +125,18 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: 'row',
     alignItems: 'center',
-    borderWidth: 2,
-    borderColor: '#000',
+    borderWidth: 1,
+    borderColor: '#ddd',
     borderRadius: 10,
     marginBottom: 15,
     paddingHorizontal: 10,
     paddingVertical: 5,
+    backgroundColor: '#fff',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
   },
   icon: {
     marginRight: 10,
@@ -143,6 +151,8 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 10,
     marginBottom: 20,
+    borderWidth: 1,
+    borderColor: '#ddd',
   },
   nextButton: {
     backgroundColor: '#008C54',
@@ -150,7 +160,12 @@ const styles = StyleSheet.create({
     borderRadius: 50,
     width: '100%',
     alignItems: 'center',
-    marginTop: 10,
+    marginTop: 250,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.2,
+    shadowRadius: 5,
+    elevation: 3,
   },
   nextButtonText: {
     color: '#fff',

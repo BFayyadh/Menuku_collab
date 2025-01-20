@@ -1,9 +1,6 @@
 import React from 'react';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import {Home, Setting, Shop} from '../pages';
 import Splash from '../pages/Splash';
-import BottomNav from '../components/BottomNav';
 import Onboarding from '../components/OnBoard/Onboarding';
 import Signup from '../pages/Signup';
 import Login from '../pages/Login';
@@ -16,33 +13,16 @@ import Wait from '../pages/client/Wait';
 import Done from '../pages/client/Dones';
 import Loginadmin from '../pages/admin/Loginadmin';
 import Signupadmin from '../pages/admin/Signupadmin';
-import Addmenu from '../pages/admin/Addmenu'
+import Addmenu from '../pages/admin/Addmenu';
+import Editmenu from '../pages/admin/HomeScreen';
+import BottomTabNavigator from '../components/BottomNav/BottomTabNavigator';
+import AdminScreen from '../pages/admin/Adminscreen';
 
 const Stack = createNativeStackNavigator();
-const Tab = createBottomTabNavigator();
-
-const Main = () => {
-  return (
-    <Tab.Navigator tabBar={props => <BottomNav {...props} />}>
-      <Tab.Screen name="Home" component={Home} options={{headerShown: false}} />
-      <Tab.Screen
-        name="Setting"
-        component={Setting}
-        options={{headerShown: false}}
-      />
-      <Tab.Screen name="Shop" component={Shop} options={{headerShown: false}} />
-    </Tab.Navigator>
-  );
-};
 
 const Router = () => {
   return (
     <Stack.Navigator initialRouteName="Splash">
-      <Stack.Screen
-        name="Main"
-        component={Main}
-        options={{headerShown: false}}
-      />
       <Stack.Screen
         name="Splash"
         component={Splash}
@@ -107,6 +87,21 @@ const Router = () => {
       <Stack.Screen
         name="Addmenu"
         component={Addmenu}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Editmenu"
+        component={Editmenu}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Adminscreen"
+        component={AdminScreen}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Main"
+        component={BottomTabNavigator}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

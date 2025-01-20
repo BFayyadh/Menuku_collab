@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, TextInput, TouchableOpacity, Alert, ScrollView, KeyboardAvoidingView, Platform, Image, StyleSheet } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Picker } from '@react-native-picker/picker';
 import { launchImageLibrary } from 'react-native-image-picker';
+import { useFocusEffect } from '@react-navigation/native';
 
 const AddMenu = ({ navigation }) => {
   const [menuType, setMenuType] = useState('');
@@ -10,26 +11,52 @@ const AddMenu = ({ navigation }) => {
   const [price, setPrice] = useState('');
   const [description, setDescription] = useState('');
   const [imageUri, setImageUri] = useState(null);
+  const isMounted = useRef(true);
+  const isFocused = useRef(false);
+
+  useEffect(() => {
+    return () => {
+      isMounted.current = false;
+    };
+  }, []);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      isFocused.current = true;
+      return () => {
+        isFocused.current = false;
+      };
+    }, [])
+  );
+
+  const chooseImage = () => {
+    if (isMounted.current && isFocused.current) {
+      launchImageLibrary({ mediaType: 'photo' }, (response) => {
+        if (response.didCancel) {
+          console.log('User cancelled image picker');
+        } else if (response.errorCode) {
+          console.log('ImagePicker Error: ', response.errorMessage);
+          if (isMounted.current && isFocused.current) {
+            Alert.alert('Error', 'An error occurred while selecting the image. Please try again.');
+          }
+        } else if (response.assets && response.assets.length > 0) {
+          const uri = response.assets[0].uri;
+          if (isMounted.current && isFocused.current) {
+            setImageUri(uri);
+          }
+        }
+      });
+    }
+  };
 
   const handleFinish = () => {
     if (!menuType || !menuName || !price || !description) {
-      Alert.alert('Error', 'Please fill in all fields');
+      if (isMounted.current && isFocused.current) {
+        Alert.alert('Error', 'Please fill in all fields');
+      }
       return;
     }
-    navigation.navigate('Loginadmin');
-  };
-
-  const chooseImage = () => {
-    launchImageLibrary({ mediaType: 'photo' }, (response) => {
-      if (response.didCancel) {
-        console.log('User cancelled image picker');
-      } else if (response.error) {
-        console.log('ImagePicker Error: ', response.error);
-      } else {
-        const uri = response.assets[0].uri;
-        setImageUri(uri);
-      }
-    });
+    navigation.navigate('Main');
   };
 
   return (

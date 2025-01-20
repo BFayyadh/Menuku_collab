@@ -11,7 +11,7 @@ const LoginAdmin = ({ navigation }) => {
       Alert.alert('Error', 'Please enter your email and password');
       return;
     }
-    navigation.navigate('Signupadmin');
+    navigation.navigate('Main');
   };
 
   return (

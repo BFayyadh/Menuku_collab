@@ -1,6 +1,6 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import HomeScreen from '../../pages/admin/HomeScreen';
 import AdminScreen from '../../pages/admin/Adminscreen';
 import { View, Text, StyleSheet } from 'react-native';
@@ -18,12 +18,12 @@ const BottomTabNavigator = () => {
           if (route.name === 'Home') {
             iconName = 'home';
           } else if (route.name === 'Admin') {
-            iconName = 'cog';
+            iconName = 'user-shield'; // Use 'user-shield' for admin icon
           }
 
           return (
             <View style={styles.iconContainer}>
-              <Icon name={iconName} size={size} color={color} />
+              <FontAwesome5 name={iconName} size={size} color={color} />
               {focused && <View style={styles.activeIndicator} />}
             </View>
           );
@@ -37,14 +37,14 @@ const BottomTabNavigator = () => {
           }
 
           return (
-            <Text style={[styles.label, { color: focused ? 'green' : 'gray' }]}>
+            <Text style={[styles.label, { color: focused ? '#34D399' : '#9CA3AF' }]}>
               {label}
             </Text>
           );
         },
         tabBarStyle: styles.tabBar,
-        tabBarActiveTintColor: 'green',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: '#34D399',
+        tabBarInactiveTintColor: '#9CA3AF',
         tabBarShowLabel: true,
       })}
     >
@@ -56,7 +56,7 @@ const BottomTabNavigator = () => {
 
 const styles = StyleSheet.create({
   tabBar: {
-    backgroundColor: '#fff',
+    backgroundColor: '#FFFFFF',
     borderTopWidth: 0,
     elevation: 10,
     height: 60,
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     width: 6,
     height: 6,
     borderRadius: 3,
-    backgroundColor: 'green',
+    backgroundColor: '#34D399',
     marginTop: 2,
   },
   label: {
@@ -79,4 +79,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BottomTabNavigator;
+export default BottomTabNavigator;  

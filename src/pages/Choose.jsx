@@ -8,7 +8,7 @@ import {useNavigation} from '@react-navigation/native';
 const Choose = () => {
   const navigation = useNavigation();
   const handleCreateMenu = () => {
-    navigation.navigate('Loginadmin');
+    Alert.alert('Create Menu', 'Navigating to Create Digital Menu');
   };
 
   const handleViewMenu = () => {
@@ -24,7 +24,7 @@ const Choose = () => {
           <MaterialCommunityIcons
             name="book-open-page-variant"
             size={70}
-            color="#008C54"
+            color="#007d34"
             style={styles.icon}
           />
           <Text style={[styles.text, styles.leftText]}>
@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
   },
   leftSection: {
     backgroundColor: '#ffffff',
-  },  
+  },
   rightSection: {
     backgroundColor: '#008C54',
   },

@@ -76,7 +76,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     alignItems: 'center',
-    backgroundColor: '#008C54',
+    backgroundColor: '#147A51',
     borderRadius: 15,
     padding: 25,
     elevation: 8,

@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import Icon from 'react-native-vector-icons/Ionicons'; // Using Ionicons as an example
 import {useNavigation} from '@react-navigation/native';
 
 const CodeInputScreen = () => {
@@ -20,16 +20,20 @@ const CodeInputScreen = () => {
     setCode(newCode);
 
     if (text && index < 3) {
+      // Move to the next input
       inputs.current[index + 1].focus();
     } else if (!text && index > 0) {
+      // Move to the previous input if the current input is cleared
       inputs.current[index - 1].focus();
     }
   };
 
   const handleConfirm = () => {
     if (code.every(digit => digit !== '')) {
+      // Only navigate if all inputs are filled
       navigation.navigate('Menu');
     } else {
+      // Optionally, you can show an alert or a message to inform the user
       alert('Please enter all digits of the code.');
     }
   };

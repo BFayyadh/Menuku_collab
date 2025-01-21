@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-const Signup = ({ navigation }) => {
+const App = ({ navigation }) => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -88,7 +88,7 @@ const Signup = ({ navigation }) => {
       <TouchableOpacity
         style={[
           styles.signupButton,
-          { backgroundColor: isFormValid() ? '#008C54' : '#ccc' },
+          { backgroundColor: isFormValid() ? '#008f4c' : '#ccc' },
         ]}
         disabled={!isFormValid()}
         onPress={handleSignUp}
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     marginBottom: 30,
   },
   loginBadge: {
-    backgroundColor: '#008C54',
+    backgroundColor: '#008f4c',
     paddingHorizontal: 15,
     paddingVertical: 3,
     height: 43,
@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: '800',
-    color: '#008C54',
+    color: '#008f4c',
   },
   inputContainer: {
     width: '80%',
@@ -180,9 +180,9 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   loginTextFooter: {
-    color: '#008C54',
+    color: '#008f4c',
     fontWeight: 'bold',
   },
 });
 
-export default Signup;
+export default App;

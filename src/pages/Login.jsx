@@ -86,7 +86,7 @@ const styles = StyleSheet.create({
     marginBottom: 50,
   },
   loginBadge: {
-    backgroundColor: '#008C54',
+    backgroundColor: '#008f4c',
     paddingHorizontal: 15,
     paddingVertical: 3,
     height: 45,
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 40,
     fontWeight: '800',
-    color: '#008C54',
+    color: '#008f4c',
   },
   inputContainer: {
     width: '80%',
@@ -127,7 +127,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   loginButton: {
-    backgroundColor: '#008C54',
+    backgroundColor: '#008f4c',
     paddingVertical: 15,
     borderRadius: 10,
     marginTop: 20,
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     color: '#000',
   },
   signUpText: {
-    color: '#008C54',
+    color: '#008f4c',
     fontWeight: 'bold',
   },
 });

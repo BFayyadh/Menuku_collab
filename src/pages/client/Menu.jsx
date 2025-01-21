@@ -1,28 +1,37 @@
-import React, { useState } from 'react';
-import { View, Text, Image, ScrollView, StyleSheet, TouchableOpacity, } from 'react-native';
+import React, {useState, useRef} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  FlatList,
+  StyleSheet,
+  TouchableOpacity,
+  ScrollView,
+} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import NasiGoreng from '../../assets/NasiGoreng.png';
 
-const App = () => {
+const Menu = () => {
   const [cart, setCart] = useState({});
-    const navigation = useNavigation();
+  const navigation = useNavigation();
+  const scrollViewRef = useRef(null);
 
-  const addToCart = (item) => {
-    setCart((prevCart) => {
-      const newCart = { ...prevCart };
+  const addToCart = item => {
+    setCart(prevCart => {
+      const newCart = {...prevCart};
       if (newCart[item.title]) {
         newCart[item.title].quantity += 1;
       } else {
-        newCart[item.title] = { ...item, quantity: 1 };
+        newCart[item.title] = {...item, quantity: 1};
       }
       return newCart;
     });
   };
 
-  const removeFromCart = (item) => {
-    setCart((prevCart) => {
-      const newCart = { ...prevCart };
+  const removeFromCart = item => {
+    setCart(prevCart => {
+      const newCart = {...prevCart};
       if (newCart[item.title]) {
         newCart[item.title].quantity -= 1;
         if (newCart[item.title].quantity === 0) {
@@ -34,25 +43,47 @@ const App = () => {
   };
 
   const getTotalQuantity = () => {
-    return Object.values(cart).reduce((total, item) => total + item.quantity, 0);
+    return Object.values(cart).reduce(
+      (total, item) => total + item.quantity,
+      0,
+    );
   };
 
   const menuItems = [
-    { title: 'Nasi Goreng Seafood', subtitle: 'Udang, Cumi, Bakso Ikan & Telur', price: 'Rp 30.000' },
-    { title: 'Nasi Goreng Spesial', subtitle: 'Nasi + Telur + Ayam', price: 'Rp 30.000' },
-    { title: 'Nasi Goreng Kampung', subtitle: 'Nasi + Telur + Sayur', price: 'Rp 28.000' },
-    { title: 'Nasi Goreng Seafood', subtitle: 'Udang, Cumi, Bakso Ikan & Telur', price: 'Rp 30.000' },
-    { title: 'Nasi Goreng Spesial', subtitle: 'Nasi + Telur + Ayam', price: 'Rp 30.000' },
-    { title: 'Nasi Goreng Kampung', subtitle: 'Nasi + Telur + Sayur', price: 'Rp 28.000' },
+    {
+      title: 'Nasi Goreng Seafood',
+      subtitle: 'Udang, Cumi, Bakso Ikan & Telur',
+      price: 'Rp 30.000',
+    },
+    {
+      title: 'Nasi Goreng Spesial',
+      subtitle: 'Nasi + Telur + Ayam',
+      price: 'Rp 30.000',
+    },
+    {
+      title: 'Nasi Goreng Kampung',
+      subtitle: 'Nasi + Telur + Sayur',
+      price: 'Rp 28.000',
+    },
+    {
+      title: 'Mie Goreng',
+      subtitle: 'Mie + Telur + Sayur',
+      price: 'Rp 25.000',
+    },
   ];
 
   return (
     <View style={styles.container}>
-      <ScrollView>
+      <ScrollView
+        ref={scrollViewRef}
+        keyboardShouldPersistTaps="handled"
+        contentContainerStyle={{paddingBottom: 80}}>
         <View style={styles.header}>
-          <TouchableOpacity style={styles.backButton}  onPress={() => navigation.navigate('Scan')}>
-            <Icon name="arrow-back" size={24} color="#10b981" />
-            <Text style={styles.backButtonText} >Back</Text>
+          <TouchableOpacity
+            style={styles.backButton}
+            onPress={() => navigation.navigate('Scan')}>
+            <Icon name="arrow-back" size={24} color="#008C54" />
+            <Text style={styles.backButtonText}>Back</Text>
           </TouchableOpacity>
           <View style={styles.rating}>
             <Icon name="star" size={24} color="#fbbf24" />
@@ -60,7 +91,7 @@ const App = () => {
           </View>
         </View>
         <View style={styles.titleContainer}>
-          <Text style={styles.title}>Warung Pak Agus</Text>
+          <Text style={styles.title}>DAPUR MALLIOBORO</Text>
           <Text style={styles.subtitle}>Jl Sayan No 10</Text>
         </View>
         <View style={styles.mainImageContainer}>
@@ -68,38 +99,54 @@ const App = () => {
         </View>
         <View style={styles.recommendedContainer}>
           <Text style={styles.recommendedTitle}>Recommended</Text>
-          <ScrollView horizontal showsHorizontalScrollIndicator={false} style={styles.recommendedItems}>
-            {menuItems.map((item, index) => (
-              <View key={index} style={styles.recommendedItem}>
+          <FlatList
+            data={menuItems}
+            horizontal
+            keyExtractor={(item, index) => `${item.title}-${index}`}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => (
+              <View style={styles.recommendedItem}>
                 <Image source={NasiGoreng} style={styles.recommendedImage} />
                 <View style={styles.recommendedItemTextContainer}>
                   <Text style={styles.recommendedItemTitle}>{item.title}</Text>
-                  <Text style={styles.recommendedItemSubtitle}>{item.subtitle}</Text>
+                  <Text style={styles.recommendedItemSubtitle}>
+                    {item.subtitle}
+                  </Text>
                   <Text style={styles.recommendedItemPrice}>{item.price}</Text>
                 </View>
                 {cart[item.title] ? (
                   <View style={styles.cartButtons}>
-                    <TouchableOpacity onPress={() => removeFromCart(item)} style={styles.cartButton}>
+                    <TouchableOpacity
+                      onPress={() => removeFromCart(item)}
+                      style={styles.cartButton}>
                       <Text style={styles.cartButtonText}>-</Text>
                     </TouchableOpacity>
-                    <Text style={styles.cartQuantity}>{cart[item.title].quantity}</Text>
-                    <TouchableOpacity onPress={() => addToCart(item)} style={styles.cartButton}>
+                    <Text style={styles.cartQuantity}>
+                      {cart[item.title].quantity}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => addToCart(item)}
+                      style={styles.cartButton}>
                       <Text style={styles.cartButtonText}>+</Text>
                     </TouchableOpacity>
                   </View>
                 ) : (
-                  <TouchableOpacity onPress={() => addToCart(item)} style={styles.addButton}>
+                  <TouchableOpacity
+                    onPress={() => addToCart(item)}
+                    style={styles.addButton}>
                     <Text style={styles.addButtonText}>Add</Text>
                   </TouchableOpacity>
                 )}
               </View>
-            ))}
-          </ScrollView>
+            )}
+          />
         </View>
         <View style={styles.divider} />
-        <View style={styles.menuScroll}>
-          {menuItems.map((item, index) => (
-            <View key={index} style={styles.menuItem}>
+        <FlatList
+          data={menuItems}
+          keyExtractor={(item, index) => `${item.title}-${index}`}
+          renderItem={({item}) => (
+            <View style={styles.menuItem}>
               <Image source={NasiGoreng} style={styles.menuItemImage} />
               <View style={styles.menuItemDetails}>
                 <Text style={styles.menuItemTitle}>{item.title}</Text>
@@ -108,27 +155,37 @@ const App = () => {
               </View>
               {cart[item.title] ? (
                 <View style={styles.cartButtons}>
-                  <TouchableOpacity onPress={() => removeFromCart(item)} style={styles.cartButton}>
+                  <TouchableOpacity
+                    onPress={() => removeFromCart(item)}
+                    style={styles.cartButton}>
                     <Text style={styles.cartButtonText}>-</Text>
                   </TouchableOpacity>
-                  <Text style={styles.cartQuantity}>{cart[item.title].quantity}</Text>
-                  <TouchableOpacity onPress={() => addToCart(item)} style={styles.cartButton}>
+                  <Text style={styles.cartQuantity}>
+                    {cart[item.title].quantity}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={() => addToCart(item)}
+                    style={styles.cartButton}>
                     <Text style={styles.cartButtonText}>+</Text>
                   </TouchableOpacity>
                 </View>
               ) : (
-                <TouchableOpacity onPress={() => addToCart(item)} style={styles.addButton}>
+                <TouchableOpacity
+                  onPress={() => addToCart(item)}
+                  style={styles.addButton}>
                   <Text style={styles.addButtonText}>Add</Text>
                 </TouchableOpacity>
               )}
             </View>
-          ))}
-        </View>
-        <View style={styles.bottomSpace} />
+          )}
+          contentContainerStyle={{paddingHorizontal: 16}}
+        />
       </ScrollView>
       {getTotalQuantity() > 0 && (
         <View style={styles.cartIconContainer}>
-          <TouchableOpacity style={styles.cartIcon}>
+          <TouchableOpacity
+            style={styles.cartIcon}
+            onPress={() => navigation.navigate('Pay')}>
             <Icon name="cart" size={24} color="#fff" />
             <View style={styles.cartQuantityBadge}>
               <Text style={styles.cartQuantityText}>{getTotalQuantity()}</Text>
@@ -159,7 +216,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backButtonText: {
-    color: '#10b981',
+    color: '#008C54',
     fontWeight: '600',
     fontSize: 16,
     marginLeft: 4,
@@ -219,7 +276,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
@@ -251,7 +308,7 @@ const styles = StyleSheet.create({
     textAlign: 'center',
   },
   addButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#008C54',
     borderRadius: 4,
     paddingVertical: 4,
     paddingHorizontal: 8,
@@ -280,7 +337,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     marginBottom: 16,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
@@ -311,7 +368,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cartButton: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#008C54',
     borderRadius: 4,
     paddingVertical: 4,
     paddingHorizontal: 8,
@@ -334,7 +391,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   cartIcon: {
-    backgroundColor: '#10b981',
+    backgroundColor: '#008C54',
     borderRadius: 8,
     padding: 16,
     position: 'relative',
@@ -353,7 +410,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   cartQuantityText: {
-    color: '#10b981',
+    color: '#008C54',
     fontSize: 12,
     fontWeight: '600',
   },
@@ -361,5 +418,4 @@ const styles = StyleSheet.create({
     height: 80,
   },
 });
-
-export default App;
+export default Menu;

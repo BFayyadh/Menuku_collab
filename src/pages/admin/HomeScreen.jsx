@@ -1,11 +1,20 @@
-import React, { useState } from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, FlatList, StyleSheet, Alert } from 'react-native';
+import React, {useState} from 'react';
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity,
+  ScrollView,
+  FlatList,
+  StyleSheet,
+  Alert,
+} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NasiGoreng from '../../assets/NasiGoreng.png';
-import { useNavigation } from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 const HomeScreen = () => {
-    const navigation = useNavigation();
+  const navigation = useNavigation();
   const [recommendedItems, setRecommendedItems] = useState([
     {
       id: '1',
@@ -33,23 +42,25 @@ const HomeScreen = () => {
     },
   ]);
 
-  const handleDelete = (id) => {
+  const handleDelete = id => {
     Alert.alert(
-      "Confirm Delete",
-      "Are you sure you want to delete this item?",
+      'Confirm Delete',
+      'Are you sure you want to delete this item?',
       [
         {
-          text: "Cancel",
-          style: "cancel"
+          text: 'Cancel',
+          style: 'cancel',
         },
         {
-          text: "Delete",
+          text: 'Delete',
           onPress: () => {
-            setRecommendedItems(recommendedItems.filter(item => item.id !== id));
+            setRecommendedItems(
+              recommendedItems.filter(item => item.id !== id),
+            );
           },
-          style: "destructive"
-        }
-      ]
+          style: 'destructive',
+        },
+      ],
     );
   };
 
@@ -60,30 +71,31 @@ const HomeScreen = () => {
           <Text style={styles.title}>Warung Pak Agus</Text>
           <Text style={styles.subtitle}>Jl Sayur No 10</Text>
         </View>
-        <Image
-          source={NasiGoreng}
-          style={styles.mainImage}
-        />
+        <Image source={NasiGoreng} style={styles.mainImage} />
         <View style={styles.recommendedContainer}>
           <Text style={styles.recommendedTitle}>Recommended</Text>
           <FlatList
             data={recommendedItems}
             horizontal
-            keyExtractor={(item) => item.id}
+            keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
-            renderItem={({ item }) => (
+            renderItem={({item}) => (
               <View style={styles.recommendedItem}>
                 <Image source={NasiGoreng} style={styles.recommendedImage} />
                 <View style={styles.recommendedItemTextContainer}>
                   <Text style={styles.recommendedItemTitle}>{item.title}</Text>
-                  <Text style={styles.recommendedItemSubtitle}>{item.subtitle}</Text>
+                  <Text style={styles.recommendedItemSubtitle}>
+                    {item.subtitle}
+                  </Text>
                   <Text style={styles.recommendedItemPrice}>{item.price}</Text>
                 </View>
                 <View style={styles.recommendedItemButtons}>
                   <TouchableOpacity style={styles.editButton}>
                     <Text style={styles.editButtonText}>EDIT</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.id)}>
+                  <TouchableOpacity
+                    style={styles.deleteButton}
+                    onPress={() => handleDelete(item.id)}>
                     <Icon name="trash" size={20} color="white" />
                   </TouchableOpacity>
                 </View>
@@ -91,7 +103,9 @@ const HomeScreen = () => {
             )}
             ListFooterComponent={
               <View style={styles.recommendedAddButtonContainer}>
-                <TouchableOpacity style={styles.recommendedAddButton} onPress={() => navigation.navigate('Addmenu')}>
+                <TouchableOpacity
+                  style={styles.recommendedAddButton}
+                  onPress={() => navigation.navigate('Addmenu')}>
                   <Icon name="plus" size={24} color="green" />
                 </TouchableOpacity>
               </View>
@@ -101,27 +115,30 @@ const HomeScreen = () => {
         <View style={styles.listSection}>
           {recommendedItems.map(item => (
             <View key={item.id} style={styles.listItem}>
-              <Image
-                source={NasiGoreng}
-                style={styles.listImage}
-              />
+              <Image source={NasiGoreng} style={styles.listImage} />
               <View style={styles.listText}>
                 <Text style={styles.listName}>{item.title}</Text>
                 <Text style={styles.listDescription}>{item.subtitle}</Text>
                 <Text style={styles.listPrice}>{item.price}</Text>
               </View>
-              <TouchableOpacity style={styles.listEditButton}>
+              <TouchableOpacity
+                style={styles.listEditButton}
+                onPress={() => navigation.navigate('Editmenus')}>
                 <Text style={styles.listEditButtonText}>EDIT</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.listDeleteButton} onPress={() => handleDelete(item.id)}>
+              <TouchableOpacity
+                style={styles.listDeleteButton}
+                onPress={() => handleDelete(item.id)}>
                 <Icon name="trash" size={20} color="white" />
               </TouchableOpacity>
             </View>
           ))}
         </View>
         <View style={styles.menuAddButtonContainer}>
-          <TouchableOpacity style={styles.menuAddButton} onPress={() => navigation.navigate('Addmenu')}>
-            <Icon name="plus" size={24} color="green"  />
+          <TouchableOpacity
+            style={styles.menuAddButton}
+            onPress={() => navigation.navigate('Addmenu')}>
+            <Icon name="plus" size={24} color="green" />
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -178,7 +195,7 @@ const styles = StyleSheet.create({
     marginRight: 16,
     alignItems: 'center',
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
+    shadowOffset: {width: 0, height: 2},
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
@@ -247,7 +264,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 24,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
@@ -267,7 +284,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     marginBottom: 8,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 2,
@@ -323,7 +340,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderRadius: 24,
     shadowColor: '#000',
-    shadowOffset: { width: 0, height: 1 },
+    shadowOffset: {width: 0, height: 1},
     shadowOpacity: 0.2,
     shadowRadius: 1.41,
     elevation: 3,

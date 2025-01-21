@@ -17,6 +17,7 @@ import Addmenu from '../pages/admin/Addmenu';
 import Editmenu from '../pages/admin/HomeScreen';
 import BottomTabNavigator from '../components/BottomNav/BottomTabNavigator';
 import AdminScreen from '../pages/admin/Adminscreen';
+import EditMenus from '../pages/admin/Editmenu';
 
 const Stack = createNativeStackNavigator();
 
@@ -102,6 +103,11 @@ const Router = () => {
       <Stack.Screen
         name="Main"
         component={BottomTabNavigator}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="Editmenus"
+        component={EditMenus}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

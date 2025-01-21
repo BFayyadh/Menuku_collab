@@ -4,9 +4,12 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import ProfileIcon from '../../assets/Profile.png';
 import BackgroundImage from '../../assets/Backgroundprofile.png';
+import { useNavigation } from '@react-navigation/native';
 
 const AdminScreen = () => {
   const [isModalVisible, setModalVisible] = useState(false);
+
+  const navigation = useNavigation();
 
   const handleQrMenuPress = () => {
     Alert.alert('QR Code', 'Coming Soon');
@@ -46,33 +49,29 @@ const AdminScreen = () => {
         </View>
       </View>
 
-      {/* Title */}
       <Text style={styles.title}>Warung Pak Agus</Text>
 
-      {/* Menu Section */}
       <View style={styles.menuContainer}>
         <TouchableOpacity style={styles.menuItemTall} activeOpacity={0.7}>
           <Icon name="line-chart" size={40} color="white" />
           <Text style={styles.menuText}>Income</Text>
         </TouchableOpacity>
         <View style={styles.menuColumn}>
-          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7}>
+          <TouchableOpacity style={styles.menuItem} activeOpacity={0.7} onPress={() => navigation.navigate('Addmenu')}>
             <Icon name="plus" size={40} color="white" />
             <Text style={styles.menuText}>Add Menu</Text>
           </TouchableOpacity>
-          <TouchableOpacity style={styles.menuItemSquare} activeOpacity={0.7}>
+          <TouchableOpacity style={styles.menuItemSquare} activeOpacity={0.7} onPress={() => navigation.navigate('Editmenus')}>
             <Icon name="edit" size={40} color="#008C54" />
             <Text style={styles.menuTextGreen}>Edit Menu</Text>
           </TouchableOpacity>
         </View>
       </View>
 
-      {/* Logout Button */}
       <TouchableOpacity style={styles.logoutButton} activeOpacity={0.7}>
         <Text style={styles.logoutText}>Log Out</Text>
       </TouchableOpacity>
 
-      {/* Modal */}
       <Modal transparent={true} visible={isModalVisible} animationType="fade">
         <View style={styles.modalOverlay}>
           <View style={styles.modalContainer}>

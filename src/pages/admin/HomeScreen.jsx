@@ -1,31 +1,57 @@
-import React from 'react';
-import { View, Text, Image, TouchableOpacity, ScrollView, StyleSheet, FlatList } from 'react-native';
+import React, { useState } from 'react';
+import { View, Text, Image, TouchableOpacity, ScrollView, FlatList, StyleSheet, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import NasiGoreng from '../../assets/NasiGoreng.png';
+import { useNavigation } from '@react-navigation/native';
 
 const HomeScreen = () => {
-  const recommendedItems = [
+    const navigation = useNavigation();
+  const [recommendedItems, setRecommendedItems] = useState([
     {
+      id: '1',
       title: 'Nasi Goreng Seafood',
       subtitle: 'Udang, Cumi, Bakso Ikan & Telur',
       price: 'Rp 30.000',
     },
     {
+      id: '2',
       title: 'Nasi Goreng Spesial',
       subtitle: 'Nasi + Telur + Ayam',
       price: 'Rp 30.000',
     },
     {
+      id: '3',
       title: 'Nasi Goreng Kampung',
       subtitle: 'Nasi + Telur + Sayur',
       price: 'Rp 28.000',
     },
     {
+      id: '4',
       title: 'Mie Goreng',
       subtitle: 'Mie + Telur + Sayur',
       price: 'Rp 25.000',
     },
-  ];
+  ]);
+
+  const handleDelete = (id) => {
+    Alert.alert(
+      "Confirm Delete",
+      "Are you sure you want to delete this item?",
+      [
+        {
+          text: "Cancel",
+          style: "cancel"
+        },
+        {
+          text: "Delete",
+          onPress: () => {
+            setRecommendedItems(recommendedItems.filter(item => item.id !== id));
+          },
+          style: "destructive"
+        }
+      ]
+    );
+  };
 
   return (
     <View style={styles.container}>
@@ -43,7 +69,7 @@ const HomeScreen = () => {
           <FlatList
             data={recommendedItems}
             horizontal
-            keyExtractor={(item, index) => `${item.title}-${index}`}
+            keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({ item }) => (
               <View style={styles.recommendedItem}>
@@ -53,14 +79,19 @@ const HomeScreen = () => {
                   <Text style={styles.recommendedItemSubtitle}>{item.subtitle}</Text>
                   <Text style={styles.recommendedItemPrice}>{item.price}</Text>
                 </View>
-                <TouchableOpacity style={styles.editButton}>
-                  <Text style={styles.editButtonText}>EDIT</Text>
-                </TouchableOpacity>
+                <View style={styles.recommendedItemButtons}>
+                  <TouchableOpacity style={styles.editButton}>
+                    <Text style={styles.editButtonText}>EDIT</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(item.id)}>
+                    <Icon name="trash" size={20} color="white" />
+                  </TouchableOpacity>
+                </View>
               </View>
             )}
             ListFooterComponent={
-              <View style={styles.addButtonContainer}>
-                <TouchableOpacity style={styles.addButton}>
+              <View style={styles.recommendedAddButtonContainer}>
+                <TouchableOpacity style={styles.recommendedAddButton} onPress={() => navigation.navigate('Addmenu')}>
                   <Icon name="plus" size={24} color="green" />
                 </TouchableOpacity>
               </View>
@@ -68,34 +99,30 @@ const HomeScreen = () => {
           />
         </View>
         <View style={styles.listSection}>
-          <View style={styles.listItem}>
-            <Image
-              source={NasiGoreng}
-              style={styles.listImage}
-            />
-            <View style={styles.listText}>
-              <Text style={styles.listName}>Nasi Goreng Seafood</Text>
-              <Text style={styles.listDescription}>Udang, Cumi, Bakso Ikan & Telur</Text>
-              <Text style={styles.listPrice}>Rp 30.000</Text>
+          {recommendedItems.map(item => (
+            <View key={item.id} style={styles.listItem}>
+              <Image
+                source={NasiGoreng}
+                style={styles.listImage}
+              />
+              <View style={styles.listText}>
+                <Text style={styles.listName}>{item.title}</Text>
+                <Text style={styles.listDescription}>{item.subtitle}</Text>
+                <Text style={styles.listPrice}>{item.price}</Text>
+              </View>
+              <TouchableOpacity style={styles.listEditButton}>
+                <Text style={styles.listEditButtonText}>EDIT</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.listDeleteButton} onPress={() => handleDelete(item.id)}>
+                <Icon name="trash" size={20} color="white" />
+              </TouchableOpacity>
             </View>
-            <TouchableOpacity style={styles.listEditButton}>
-              <Text style={styles.listEditButtonText}>EDIT</Text>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.listItem}>
-            <Image
-              source={NasiGoreng}
-              style={styles.listImage}
-            />
-            <View style={styles.listText}>
-              <Text style={styles.listName}>Nasi Goreng Seafood</Text>
-              <Text style={styles.listDescription}>Udang, Cumi, Bakso Ikan & Telur</Text>
-              <Text style={styles.listPrice}>Rp 30.000</Text>
-            </View>
-            <TouchableOpacity style={styles.listEditButton}>
-              <Text style={styles.listEditButtonText}>EDIT</Text>
-            </TouchableOpacity>
-          </View>
+          ))}
+        </View>
+        <View style={styles.menuAddButtonContainer}>
+          <TouchableOpacity style={styles.menuAddButton} onPress={() => navigation.navigate('Addmenu')}>
+            <Icon name="plus" size={24} color="green"  />
+          </TouchableOpacity>
         </View>
       </ScrollView>
     </View>
@@ -128,7 +155,7 @@ const styles = StyleSheet.create({
     height: 200,
     borderRadius: 16,
     marginVertical: 16,
-    marginHorizontal:20,
+    marginHorizontal: 20,
   },
   recommendedContainer: {
     paddingHorizontal: 16,
@@ -147,7 +174,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     borderRadius: 8,
     padding: 8,
-    width: 150,
+    width: 200,
     marginRight: 16,
     alignItems: 'center',
     shadowColor: '#000',
@@ -184,26 +211,38 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#111827',
   },
+  recommendedItemButtons: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: '100%',
+    marginTop: 8,
+  },
   editButton: {
     paddingVertical: 4,
     paddingHorizontal: 8,
     backgroundColor: '#10b981',
     borderRadius: 8,
-    marginTop: 8,
+    marginRight: 8,
   },
   editButtonText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 12,
   },
-  addButtonContainer: {
+  deleteButton: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: '#f87171',
+    borderRadius: 8,
+  },
+  recommendedAddButtonContainer: {
     justifyContent: 'center',
     alignItems: 'center',
     width: 150,
     height: 150,
     marginTop: 50,
   },
-  addButton: {
+  recommendedAddButton: {
     padding: 8,
     backgroundColor: 'white',
     borderRadius: 24,
@@ -261,12 +300,36 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     backgroundColor: '#10b981',
     borderRadius: 8,
+    marginRight: 8,
   },
   listEditButtonText: {
     color: 'white',
     fontWeight: 'bold',
     fontSize: 12,
   },
+  listDeleteButton: {
+    paddingVertical: 4,
+    paddingHorizontal: 8,
+    backgroundColor: '#f87171',
+    borderRadius: 8,
+  },
+  menuAddButtonContainer: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginVertical: 16,
+  },
+  menuAddButton: {
+    padding: 8,
+    backgroundColor: 'white',
+    borderRadius: 24,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.2,
+    shadowRadius: 1.41,
+    elevation: 3,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 });
 
-export default HomeScreen;  
+export default HomeScreen;

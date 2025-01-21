@@ -1,24 +1,26 @@
 import React from 'react';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 import HomeScreen from '../../pages/admin/HomeScreen';
 import AdminScreen from '../../pages/admin/Adminscreen';
-import { View, Text, StyleSheet } from 'react-native';
+import CashierScreen from '../../pages/admin/Cashier';
+import {View, Text, StyleSheet} from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabNavigator = () => {
   return (
     <Tab.Navigator
-      screenOptions={({ route }) => ({
-        headerShown: false, // Disable the header
-        tabBarIcon: ({ color, size, focused }) => {
+      screenOptions={({route}) => ({
+        headerShown: false,
+        tabBarIcon: ({color, size, focused}) => {
           let iconName;
-
           if (route.name === 'Home') {
             iconName = 'home';
           } else if (route.name === 'Admin') {
-            iconName = 'user-shield'; // Use 'user-shield' for admin icon
+            iconName = 'user-shield';
+          } else if (route.name === 'Cashier') {
+            iconName = 'cash-register';
           }
 
           return (
@@ -28,16 +30,19 @@ const BottomTabNavigator = () => {
             </View>
           );
         },
-        tabBarLabel: ({ color, focused }) => {
+        tabBarLabel: ({color, focused}) => {
           let label;
           if (route.name === 'Home') {
             label = 'Home';
           } else if (route.name === 'Admin') {
             label = 'Admin';
+          } else if (route.name === 'Cashier') {
+            label = 'Cashier';
           }
 
           return (
-            <Text style={[styles.label, { color: focused ? '#34D399' : '#9CA3AF' }]}>
+            <Text
+              style={[styles.label, {color: focused ? '#34D399' : '#9CA3AF'}]}>
               {label}
             </Text>
           );
@@ -46,9 +51,9 @@ const BottomTabNavigator = () => {
         tabBarActiveTintColor: '#34D399',
         tabBarInactiveTintColor: '#9CA3AF',
         tabBarShowLabel: true,
-      })}
-    >
+      })}>
       <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Cashier" component={CashierScreen} />
       <Tab.Screen name="Admin" component={AdminScreen} />
     </Tab.Navigator>
   );
@@ -79,4 +84,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default BottomTabNavigator;  
+export default BottomTabNavigator;

@@ -16,11 +16,6 @@ const ScanOrEnter = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity
-        style={styles.backButton}
-        onPress={() => navigation.navigate('Choose')}>
-        <Text style={styles.backText}>Back</Text>
-      </TouchableOpacity>
       <View style={styles.content}>
         <TouchableOpacity style={styles.iconContainer} onPress={handleScan}>
           <Icon name="qrcode-scan" size={80} color="#fff" style={styles.icon} />

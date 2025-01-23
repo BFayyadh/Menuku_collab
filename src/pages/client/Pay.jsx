@@ -5,6 +5,7 @@ import NasiGoreng from '../../assets/NasiGoreng.png';
 const Pay = ({ navigation }) => {
   const [orders, setOrders] = useState([]);
   const [note, setNote] = useState('');
+  const [name, setName] = useState('');
 
   useEffect(() => {
     const cartItems = [
@@ -93,6 +94,15 @@ const Pay = ({ navigation }) => {
             placeholder="Enter your note here"
             value={note}
             onChangeText={setNote}
+          />
+        </View>
+        <View style={styles.noteContainer}>
+          <Text style={styles.noteTitle}>Enter your name:</Text>
+          <TextInput
+            style={styles.noteInput}
+            placeholder="Enter your name here"
+            value={name}
+            onChangeText={setName}
           />
         </View>
       </ScrollView>

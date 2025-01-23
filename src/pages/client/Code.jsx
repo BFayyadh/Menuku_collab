@@ -36,13 +36,10 @@ const CodeInputScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.backButton}>
-        <Icon
-          name="arrow-back"
-          size={24}
-          color="#fff"
-          onPress={() => navigation.navigate('Choose')}
-        />
+      <TouchableOpacity
+        style={styles.backButton}
+        onPress={() => navigation.goBack()}>
+        <Icon name="arrow-back" size={24} color="#fff" />
       </TouchableOpacity>
       <Text style={styles.title}>Enter the code</Text>
       <View style={styles.codeContainer}>
